@@ -2,11 +2,10 @@
 SetBatchLines, -1
 SetWorkingDir, %A_ScriptDir%
 
-#Include %A_ScriptDir%\..\..\lib
-#Include Class_RichEdit.ahk
-#Include IRCClass.ahk
-#Include Jxon.ahk
-#Include Socket.ahk
+#Include lib\
+#Include AutoHotkey-JSON\Jxon.ahk
+#Include Socket.ahk\Socket.ahk
+#Include MyRC\MyRC.ahk
 #Include Utils.ahk
 
 SettingsFile := "Settings.ini"
@@ -29,9 +28,9 @@ IRC.Connect(Server.Addr, Server.Port, Nicks[1], Server.User, Server.Nick, Server
 IRC.SendJOIN(StrSplit(Server.Channels, ",", " `t")*)
 
 myTcp := new SocketTCP()
-myTcp.bind("addr_any", 26656)
-myTcp.listen()
-myTcp.onAccept := Func("OnTCPAccept")
+myTcp.OnAccept := Func("OnTCPAccept")
+myTcp.Bind(["127.0.0.1", 26656])
+myTcp.Listen()
 return
 
 OnTCPAccept(tcp)

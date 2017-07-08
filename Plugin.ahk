@@ -4,9 +4,9 @@
 #SingleInstance, Off
 SetWorkingDir, %A_LineFile%\..
 SetBatchLines, -1
-#Include %A_LineFile%\..\..\..\lib
-#Include Socket.ahk
-#Include Jxon.ahk
+#Include %A_LineFile%\..\lib\
+#Include Socket.ahk\Socket.ahk
+#Include AutoHotkey-JSON\Jxon.ahk
 #Include Utils.ahk
 
 Json = %1%
@@ -28,8 +28,8 @@ class IRC
 	__Call(Name, Params*)
 	{
 		TCP := new SocketTCP()
-		TCP.Connect("localhost", 26656)
+		TCP.Connect(["127.0.0.1", 26656])
 		TCP.SendText(Jxon_Dump({MethodName: Name, Params: Params}))
-		return Jxon_Load(TCP.recvText()).return
+		return Jxon_Load(TCP.RecvText()).return
 	}
 }

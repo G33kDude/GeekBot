@@ -1,0 +1,11 @@
+# Binary executables
+*.exe
+*.dll
+
+# AHK Studio backup folders
+backup/
+
+# Bot files
+Settings.ini
+/temp/
+/state/

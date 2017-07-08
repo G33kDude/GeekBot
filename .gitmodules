@@ -1,0 +1,9 @@
+[submodule "lib/Socket.ahk"]
+	path = lib/Socket.ahk
+	url = https://github.com/G33kDude/Socket.ahk.git
+[submodule "lib/MyRC"]
+	path = lib/MyRC
+	url = https://github.com/G33kDude/MyRC.git
+[submodule "lib/AutoHotkey-JSON"]
+	path = lib/AutoHotkey-JSON
+	url = https://github.com/cocobelgica/AutoHotkey-JSON.git
