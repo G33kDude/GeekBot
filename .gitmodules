@@ -7,3 +7,6 @@
 [submodule "lib/AutoHotkey-JSON"]
 	path = lib/AutoHotkey-JSON
 	url = https://github.com/cocobelgica/AutoHotkey-JSON.git
+[submodule "lib/RemoteObj.ahk"]
+	path = lib/RemoteObj.ahk
+	url = https://github.com/G33kDude/RemoteObj.ahk.git

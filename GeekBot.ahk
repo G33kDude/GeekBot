@@ -6,6 +6,7 @@ SetWorkingDir, %A_ScriptDir%
 #Include AutoHotkey-JSON\Jxon.ahk
 #Include Socket.ahk\Socket.ahk
 #Include MyRC\MyRC.ahk
+#Include RemoteObj.ahk\RemoteObj.ahk
 #Include Utils.ahk
 
 SettingsFile := "Settings.ini"
@@ -27,38 +28,8 @@ IRC := new Bot(Settings.Trigger, Settings.Greetings, Settings.Aliases, Nicks, Se
 IRC.Connect(Server.Addr, Server.Port, Nicks[1], Server.User, Server.Nick, Server.Pass)
 IRC.SendJOIN(StrSplit(Server.Channels, ",", " `t")*)
 
-myTcp := new SocketTCP()
-myTcp.OnAccept := Func("OnTCPAccept")
-myTcp.Bind(["127.0.0.1", 26656])
-myTcp.Listen()
+PluginAPI := new RemoteObj(IRC, [Settings.Plugins.BindAddr, Settings.Plugins.BindPort])
 return
-
-OnTCPAccept(tcp)
-{
-	newTcp := tcp.accept()
-	Text := newTcp.recvText()
-	
-	try
-	{
-		try
-			Obj := Jxon_Load(Text)
-		catch e
-			throw Exception("JSON Decode: " e.Message, e.What, e.Extra)
-		
-		if !(ParamCount := IsFunc(IRC[Obj.MethodName]))
-			throw Exception("Unkown method: " Obj.MethodName)
-		if (Obj.Params.Length() != ParamCount-2) ; -2 for IsFunc and implicit 'this'
-			IRC.Log("API WARNING: Parameter count mismatch: " Obj.Params.Length() "/" ParamCount-2)
-	
-		retval := IRC[Obj.MethodName].Call(IRC, Obj.Params*)
-		newTcp.sendText(Jxon_Dump({return: retval}))
-	
-	} catch e {
-		IRC.Log("API ERROR: " e.Message)		
-	} finally {
-		newTcp.__Delete()
-	}
-}
 
 class Bot extends IRC
 {
