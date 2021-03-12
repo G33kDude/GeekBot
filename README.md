@@ -37,7 +37,7 @@ If your system doesn't boot into a desktop automatically, you will first
 need to start a desktop environment.
 
 1. Run `export DISPLAY=:0` to set the display for graphical programs to use.
-2. Run `xvfb -screen 0 800x600x24` to start the X server at 800x600 resolution
+2. Run `Xvfb -screen 0 800x600x24` to start the X server at 800x600 resolution
    with 24 bit colors.
 3. Run `fluxbox` to start the window manager.
 4. (Optional) Run `x11vnc -nopw -forever -shared -localhost` to start a VNC
